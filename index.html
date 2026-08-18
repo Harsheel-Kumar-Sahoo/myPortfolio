@@ -3,209 +3,1881 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Harsheel Kumar Sahoo — Portfolio</title>
 <meta name="description" content="Harsheel Kumar Sahoo — B.Tech Artificial Intelligence student at SVNIT Surat.">
 
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="style.css">
+<!-- Apply saved theme before page renders -->
 <script>
   try {
     var saved = localStorage.getItem('theme');
-    if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-  } catch (e) {}
+
+    if (saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
 </script>
+
+<style>
+
+/* =========================================================
+   TOKENS
+========================================================= */
+
+:root,
+:root[data-theme="light"] {
+  --bg: #FAFAF8;
+  --bg-raised: #FFFFFF;
+  --ink: #14171F;
+  --ink-soft: #5B6270;
+  --accent: #3454D1;
+  --accent-soft: #EEF1FC;
+  --line: #E3E4E0;
+  --line-strong: #C9CBC5;
+
+  --font-display: 'Space Grotesk', 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --maxw: 1120px;
+  --pad: clamp(20px, 5vw, 64px);
+
+  --radius: 14px;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0B0C10;
+  --bg-raised: #15171D;
+  --ink: #F3F4F1;
+  --ink-soft: #9AA0AC;
+  --accent: #6C8CFF;
+  --accent-soft: #1B2140;
+  --line: #24262E;
+  --line-strong: #383B46;
+}
+
+body {
+  transition: background-color .2s ease, color .2s ease;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================================
+   GRAIN
+========================================================= */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.025;
+  mix-blend-mode: overlay;
+
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+:root[data-theme="light"] .grain {
+  mix-blend-mode: multiply;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px var(--pad);
+
+  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+
+  backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid var(--line);
+}
+
+.nav__mark {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: 0.02em;
+}
+
+.nav__mark-dot {
+  color: var(--accent);
+}
+
+.nav__links {
+  display: flex;
+  gap: 32px;
+
+  font-size: 14.5px;
+  color: var(--ink-soft);
+}
+
+.nav__links a {
+  transition: color .15s ease;
+}
+
+.nav__links a:hover {
+  color: var(--ink);
+}
+
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav__cta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+
+  padding: 8px 14px;
+
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+
+  transition:
+    border-color .15s ease,
+    background .15s ease;
+}
+
+.nav__cta:hover {
+  border-color: var(--ink);
+  background: var(--bg-raised);
+}
+
+/* =========================================================
+   THEME TOGGLE
+========================================================= */
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+
+  background: none;
+  color: var(--ink);
+
+  cursor: pointer;
+
+  transition:
+    border-color .15s ease,
+    background .15s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--ink);
+  background: var(--bg-raised);
+}
+
+.theme-toggle__icon {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-toggle__icon--sun {
+  display: block;
+}
+
+:root:not([data-theme="dark"]) .theme-toggle__icon--moon {
+  display: block;
+}
+
+.mnav__theme {
+  padding: 16px var(--pad);
+
+  border-bottom: 1px solid var(--line);
+
+  font-size: 15px;
+  font-family: var(--font-body);
+  text-align: left;
+
+  background: none;
+
+  border-left: none;
+  border-right: none;
+  border-top: none;
+
+  color: var(--ink);
+
+  cursor: pointer;
+}
+
+/* =========================================================
+   MOBILE BURGER
+========================================================= */
+
+.nav__burger {
+  display: none;
+
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 5px;
+
+  width: 34px;
+  height: 34px;
+
+  background: none;
+  border: none;
+
+  cursor: pointer;
+}
+
+.nav__burger span {
+  display: block;
+
+  height: 2px;
+  width: 100%;
+
+  background: var(--ink);
+
+  transition:
+    transform .2s ease,
+    opacity .2s ease;
+}
+
+.nav__burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav__burger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav__burger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* =========================================================
+   MOBILE NAV
+========================================================= */
+
+.mnav {
+  display: none;
+
+  flex-direction: column;
+
+  position: sticky;
+  top: 65px;
+
+  z-index: 99;
+
+  background: var(--bg-raised);
+
+  border-bottom: 1px solid var(--line);
+
+  overflow: hidden;
+
+  max-height: 0;
+
+  transition: max-height .25s ease;
+}
+
+.mnav.open {
+  max-height: 320px;
+}
+
+.mnav a {
+  padding: 16px var(--pad);
+
+  border-bottom: 1px solid var(--line);
+
+  font-size: 15px;
+}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+
+.section {
+  max-width: var(--maxw);
+
+  margin: 0 auto;
+
+  padding: 96px var(--pad) 0;
+}
+
+.section--contact {
+  padding-bottom: 96px;
+}
+
+.section__head {
+  margin-bottom: 44px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+
+  font-size: 12.5px;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  color: var(--accent);
+
+  margin: 0 0 10px;
+}
+
+.section__head h2 {
+  font-family: var(--font-display);
+
+  font-size: clamp(26px, 3.4vw, 36px);
+
+  font-weight: 600;
+
+  margin: 0;
+
+  letter-spacing: -0.01em;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+  position: relative;
+
+  max-width: var(--maxw);
+
+  margin: 0 auto;
+
+  padding: clamp(56px, 9vw, 120px) var(--pad) 88px;
+
+  display: grid;
+
+  grid-template-columns: 1.5fr 1fr;
+
+  gap: 40px;
+
+  align-items: center;
+
+  overflow: hidden;
+}
+
+#net {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: -1;
+
+  opacity: 0.55;
+}
+
+.hero__inner {
+  position: relative;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+
+  font-weight: 700;
+
+  font-size: clamp(38px, 6.4vw, 68px);
+
+  line-height: 1.04;
+
+  letter-spacing: -0.02em;
+
+  margin: 14px 0 22px;
+}
+
+.hero__title .dot {
+  color: var(--accent);
+}
+
+.hero__sub {
+  max-width: 480px;
+
+  color: var(--ink-soft);
+
+  font-size: 17px;
+
+  margin: 0 0 32px;
+}
+
+.hero__actions {
+  display: flex;
+
+  gap: 14px;
+
+  flex-wrap: wrap;
+
+  margin-bottom: 28px;
+}
+
+.btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 13px 22px;
+
+  border-radius: 999px;
+
+  font-size: 14.5px;
+
+  font-weight: 500;
+
+  transition:
+    transform .15s ease,
+    background .15s ease,
+    border-color .15s ease;
+}
+
+.btn--primary {
+  background: var(--ink);
+
+  color: var(--bg);
+}
+
+.btn--primary:hover {
+  background: var(--accent);
+
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  border: 1px solid var(--line-strong);
+
+  color: var(--ink);
+}
+
+.btn--ghost:hover {
+  border-color: var(--ink);
+
+  transform: translateY(-1px);
+}
+
+.hero__meta {
+  font-family: var(--font-mono);
+
+  font-size: 13px;
+
+  color: var(--ink-soft);
+}
+
+.hero__meta .sep {
+  margin: 0 10px;
+
+  color: var(--line-strong);
+}
+
+/* =========================================================
+   PROFILE PHOTO
+========================================================= */
+
+.hero__photo {
+  display: flex;
+
+  justify-content: center;
+}
+
+.photo-ring {
+  width: clamp(160px, 22vw, 240px);
+
+  aspect-ratio: 1;
+
+  border-radius: 50%;
+
+  padding: 6px;
+
+  background:
+    linear-gradient(
+      155deg,
+      var(--accent),
+      var(--accent-soft)
+    );
+
+  position: relative;
+}
+
+.photo-ring img,
+.photo-fallback {
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  display: block;
+
+  background: var(--bg-raised);
+}
+
+.photo-fallback {
+  display: none;
+
+  align-items: center;
+  justify-content: center;
+
+  font-family: var(--font-mono);
+
+  font-weight: 500;
+
+  font-size: clamp(20px, 3vw, 28px);
+
+  color: var(--accent);
+
+  letter-spacing: 0.04em;
+}
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.about__grid {
+  display: grid;
+
+  grid-template-columns: 1.4fr 1fr;
+
+  gap: 56px;
+
+  align-items: start;
+}
+
+.about__text {
+  font-size: 17px;
+
+  color: var(--ink-soft);
+
+  max-width: 60ch;
+}
+
+.highlights {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0;
+
+  border-top: 1px solid var(--line);
+}
+
+.highlight {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: baseline;
+
+  padding: 16px 0;
+
+  border-bottom: 1px solid var(--line);
+
+  gap: 16px;
+}
+
+.highlight__label {
+  font-family: var(--font-mono);
+
+  font-size: 13px;
+
+  color: var(--ink-soft);
+}
+
+.highlight__value {
+  font-family: var(--font-mono);
+
+  font-size: 13.5px;
+
+  font-weight: 500;
+
+  text-align: right;
+}
+
+/* =========================================================
+   SKILLS
+========================================================= */
+
+.skills {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 280px));
+
+  gap: 48px;
+}
+
+.skill-group h3 {
+  font-size: 13px;
+
+  font-family: var(--font-mono);
+
+  color: var(--ink-soft);
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.06em;
+
+  margin: 0 0 16px;
+
+  font-weight: 500;
+}
+
+.chips {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+.chip {
+  padding: 9px 16px;
+
+  background: var(--accent-soft);
+
+  color: var(--accent);
+
+  border-radius: 999px;
+
+  font-size: 13.5px;
+
+  font-weight: 500;
+}
+
+.chip--outline {
+  background: none;
+
+  border: 1px dashed var(--line-strong);
+
+  color: var(--ink-soft);
+}
+
+/* =========================================================
+   PROJECTS
+========================================================= */
+
+.projects {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 24px;
+}
+
+.card {
+  background: var(--bg-raised);
+
+  border: 1px solid var(--line);
+
+  border-radius: var(--radius);
+
+  padding: 26px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  transition:
+    border-color .15s ease,
+    transform .15s ease;
+}
+
+.card:hover {
+  border-color: var(--line-strong);
+
+  transform: translateY(-3px);
+}
+
+.card--placeholder {
+  border-style: dashed;
+
+  background: transparent;
+}
+
+.card__top {
+  margin-bottom: 14px;
+}
+
+.card__tag {
+  font-family: var(--font-mono);
+
+  font-size: 11.5px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.06em;
+
+  color: var(--accent);
+}
+
+.card__tag--muted {
+  color: var(--ink-soft);
+}
+
+.card h3 {
+  font-family: var(--font-display);
+
+  font-size: 19px;
+
+  margin: 0 0 10px;
+
+  font-weight: 600;
+}
+
+.card p {
+  color: var(--ink-soft);
+
+  font-size: 14.5px;
+
+  margin: 0 0 18px;
+
+  flex-grow: 1;
+}
+
+.card__tags {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  margin-bottom: 18px;
+}
+
+.card__tags span {
+  font-family: var(--font-mono);
+
+  font-size: 11.5px;
+
+  padding: 4px 10px;
+
+  border: 1px solid var(--line);
+
+  border-radius: 999px;
+
+  color: var(--ink-soft);
+}
+
+.card__link {
+  font-size: 13.5px;
+
+  font-weight: 500;
+
+  color: var(--ink);
+}
+
+.card__link--muted {
+  color: var(--ink-soft);
+}
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 40px;
+
+  align-items: end;
+
+  border-top: 1px solid var(--line);
+
+  padding-top: 40px;
+}
+
+.contact__text {
+  color: var(--ink-soft);
+
+  font-size: 17px;
+
+  max-width: 44ch;
+
+  margin: 0;
+}
+
+.contact__links {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0;
+}
+
+.contact__link {
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 16px 0;
+
+  border-bottom: 1px solid var(--line);
+
+  font-family: var(--font-mono);
+
+  font-size: 15px;
+
+  transition:
+    color .15s ease,
+    padding-left .15s ease;
+}
+
+.contact__link:hover {
+  color: var(--accent);
+
+  padding-left: 6px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+  max-width: var(--maxw);
+
+  margin: 40px auto 0;
+
+  padding: 24px var(--pad) 48px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  font-family: var(--font-mono);
+
+  font-size: 12.5px;
+
+  color: var(--ink-soft);
+
+  border-top: 1px solid var(--line);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 860px) {
+
+  .nav__links,
+  .nav__actions {
+    display: none;
+  }
+
+  .nav__burger {
+    display: flex;
+  }
+
+  .mnav {
+    display: flex;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+
+    text-align: left;
+
+    padding-top: 48px;
+  }
+
+  .hero__photo {
+    order: -1;
+
+    justify-content: flex-start;
+
+    margin-bottom: 8px;
+  }
+
+  .photo-ring {
+    width: 108px;
+  }
+
+  .about__grid {
+    grid-template-columns: 1fr;
+
+    gap: 32px;
+  }
+
+  .skills {
+    grid-template-columns: 1fr;
+
+    gap: 28px;
+  }
+
+  .projects {
+    grid-template-columns: 1fr;
+  }
+
+  .contact {
+    grid-template-columns: 1fr;
+
+    align-items: start;
+  }
+
+  .section {
+    padding-top: 64px;
+  }
+
+  .footer {
+    flex-direction: column;
+
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .hero__actions {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .btn {
+    justify-content: center;
+  }
+}
+
+</style>
 </head>
+
 <body>
 
 <div class="grain" aria-hidden="true"></div>
 
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
 <header class="nav" id="nav">
-  <a href="#top" class="nav__mark">HKS<span class="nav__mark-dot">.</span></a>
+
+  <a href="#top" class="nav__mark">
+    HKS<span class="nav__mark-dot">.</span>
+  </a>
+
   <nav class="nav__links">
     <a href="#about">About</a>
     <a href="#skills">Skills</a>
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
   </nav>
+
   <div class="nav__actions">
-    <a class="nav__cta" href="https://www.linkedin.com/in/harsheel-kumar-sahoo" target="_blank" rel="noopener">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>
+
+    <a
+      class="nav__cta"
+      href="https://www.linkedin.com/in/harsheel-kumar-sahoo"
+      target="_blank"
+      rel="noopener"
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z"/>
+      </svg>
+
       <span>LinkedIn</span>
     </a>
-    <a class="nav__cta" href="https://github.com/Harsheel-Kumar-Sahoo" target="_blank" rel="noopener">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.79-.25.79-.55 0-.27-.01-1.16-.02-2.11-3.2.7-3.87-1.36-3.87-1.36-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14 0 1.54-.01 2.79-.01 3.17 0 .3.2.66.8.55A10.52 10.52 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5Z"/></svg>
+
+    <a
+      class="nav__cta"
+      href="https://github.com/Harsheel-Kumar-Sahoo"
+      target="_blank"
+      rel="noopener"
+    >
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.79-.25.79-.55 0-.27-.01-1.16-.02-2.11-3.2.7-3.87-1.36-3.87-1.36-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14 0 1.54-.01 2.79-.01 3.17 0 .3.2.66.8.55A10.52 10.52 0 0 0 23.5 12c0-6.35-5.15-11.5-11.5-11.5Z"/>
+      </svg>
+
       <span>GitHub</span>
     </a>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode" aria-pressed="false">
-      <svg class="theme-toggle__icon theme-toggle__icon--sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12h2.5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
-      <svg class="theme-toggle__icon theme-toggle__icon--moon" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5a.6.6 0 0 0-.75-.8A10 10 0 1 0 21.3 15.45a.6.6 0 0 0-.8-.75Z"/></svg>
+
+    <button
+      class="theme-toggle"
+      id="themeToggle"
+      aria-label="Toggle light/dark mode"
+      aria-pressed="false"
+    >
+
+      <svg
+        class="theme-toggle__icon theme-toggle__icon--sun"
+        width="17"
+        height="17"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="4.5"/>
+        <path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12h2.5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/>
+      </svg>
+
+      <svg
+        class="theme-toggle__icon theme-toggle__icon--moon"
+        width="17"
+        height="17"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5a.6.6 0 0 0-.75-.8A10 10 0 1 0 21.3 15.45a.6.6 0 0 0-.8-.75Z"/>
+      </svg>
+
     </button>
+
   </div>
-  <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
-    <span></span><span></span><span></span>
+
+  <button
+    class="nav__burger"
+    id="burger"
+    aria-label="Toggle menu"
+    aria-expanded="false"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
   </button>
+
 </header>
 
+<!-- =========================================================
+     MOBILE NAVIGATION
+========================================================= -->
+
 <div class="mnav" id="mnav">
+
   <a href="#about">About</a>
   <a href="#skills">Skills</a>
   <a href="#projects">Projects</a>
   <a href="#contact">Contact</a>
-  <a href="https://www.linkedin.com/in/harsheel-kumar-sahoo" target="_blank" rel="noopener">LinkedIn ↗</a>
-  <a href="https://github.com/Harsheel-Kumar-Sahoo" target="_blank" rel="noopener">GitHub ↗</a>
-  <button class="mnav__theme" id="mnavThemeToggle">Toggle light / dark mode</button>
+
+  <a
+    href="https://www.linkedin.com/in/harsheel-kumar-sahoo"
+    target="_blank"
+    rel="noopener"
+  >
+    LinkedIn ↗
+  </a>
+
+  <a
+    href="https://github.com/Harsheel-Kumar-Sahoo"
+    target="_blank"
+    rel="noopener"
+  >
+    GitHub ↗
+  </a>
+
+  <button class="mnav__theme" id="mnavThemeToggle">
+    Toggle light / dark mode
+  </button>
+
 </div>
 
 <main id="top">
 
-  <!-- HERO -->
-  <section class="hero">
-    <canvas id="net" aria-hidden="true"></canvas>
-    <div class="hero__inner">
-      <p class="eyebrow">B.Tech · Artificial Intelligence · SVNIT Surat</p>
-      <h1 class="hero__title">
-        Harsheel Kumar<br>Sahoo<span class="dot">.</span>
-      </h1>
-      <p class="hero__sub">
-        First-year AI undergraduate building a foundation in algorithms, systems and machine learning —
-        with a habit of turning ideas into working prototypes.
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+  <canvas id="net" aria-hidden="true"></canvas>
+
+  <div class="hero__inner">
+
+    <p class="eyebrow">
+      B.Tech · Artificial Intelligence · SVNIT Surat
+    </p>
+
+    <h1 class="hero__title">
+      Harsheel Kumar<br>
+      Sahoo<span class="dot">.</span>
+    </h1>
+
+    <p class="hero__sub">
+      First-year AI undergraduate building a foundation in algorithms,
+      systems and machine learning — with a habit of turning ideas into
+      working prototypes.
+    </p>
+
+    <div class="hero__actions">
+
+      <a href="#projects" class="btn btn--primary">
+        View projects
+      </a>
+
+      <a
+        href="https://github.com/Harsheel-Kumar-Sahoo"
+        target="_blank"
+        rel="noopener"
+        class="btn btn--ghost"
+      >
+        GitHub profile
+      </a>
+
+    </div>
+
+    <div class="hero__meta">
+      <span>Gujarat, India</span>
+      <span class="sep">/</span>
+      <span>Class of 2030</span>
+    </div>
+
+  </div>
+
+  <div class="hero__photo">
+
+    <div class="photo-ring">
+
+      <img
+        src="profile.png"
+        alt="Portrait of Harsheel Kumar Sahoo"
+        id="profileImg"
+        onerror="
+          this.style.display='none';
+          document.getElementById('photoFallback').style.display='flex';
+        "
+      >
+
+      <div class="photo-fallback" id="photoFallback">
+        HKS
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     ABOUT
+========================================================= -->
+
+<section class="section" id="about">
+
+  <div class="section__head">
+
+    <p class="eyebrow">
+      01 — About
+    </p>
+
+    <h2>
+      Starting from first principles.
+    </h2>
+
+  </div>
+
+  <div class="about__grid">
+
+    <p class="about__text">
+      I'm an Artificial Intelligence undergraduate at Sardar Vallabhbhai
+      National Institute of Technology (SVNIT), Surat, just getting started
+      on the B.Tech journey. My background is rooted in mathematics and
+      problem solving — I came in through competitive exams and olympiads,
+      and I like carrying that same rigor into how I approach code.
+      Right now I'm focused on strengthening my fundamentals in programming,
+      data structures and the math that underlies machine learning, while
+      building small hands-on projects along the way.
+    </p>
+
+    <div class="highlights">
+
+      <div class="highlight">
+
+        <span class="highlight__label">
+          JEE Advanced
+        </span>
+
+        <span class="highlight__value">
+          Qualified · AIR 21588
+        </span>
+
+      </div>
+
+      <div class="highlight">
+
+        <span class="highlight__label">
+          JEE Main
+        </span>
+
+        <span class="highlight__value">
+          99.03 %ile · AIR 15583
+        </span>
+
+      </div>
+
+      <div class="highlight">
+
+        <span class="highlight__label">
+          IOQM 2024
+        </span>
+
+        <span class="highlight__value">
+          Merit Certificate
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     SKILLS
+========================================================= -->
+
+<section class="section" id="skills">
+
+  <div class="section__head">
+
+    <p class="eyebrow">
+      02 — Skills
+    </p>
+
+    <h2>
+      What I build with.
+    </h2>
+
+  </div>
+
+  <div class="skills">
+
+    <div class="skill-group">
+
+      <h3>
+        Languages
+      </h3>
+
+      <div class="chips">
+
+        <span class="chip">C++</span>
+        <span class="chip">C</span>
+        <span class="chip">Python</span>
+
+      </div>
+
+    </div>
+
+    <div class="skill-group">
+
+      <h3>
+        Web &amp; Data
+      </h3>
+
+      <div class="chips">
+
+        <span class="chip">HTML</span>
+        <span class="chip">MySQL</span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     PROJECTS
+========================================================= -->
+
+<section class="section" id="projects">
+
+  <div class="section__head">
+
+    <p class="eyebrow">
+      03 — Projects
+    </p>
+
+    <h2>
+      Things I've made.
+    </h2>
+
+  </div>
+
+  <div class="projects">
+
+    <article class="card">
+
+      <div class="card__top">
+
+        <span class="card__tag">
+          Hardware · Arduino
+        </span>
+
+      </div>
+
+      <h3>
+        Social Distance Maintainer
+      </h3>
+
+      <p>
+        A wearable belt built with an Arduino Mega, four ultrasonic sensors
+        and a buzzer that alerts the wearer when someone enters an unsafe
+        distance. Built and demoed as part of an ATL Marathon submission.
       </p>
-      <div class="hero__actions">
-        <a href="#projects" class="btn btn--primary">View projects</a>
-        <a href="https://github.com/Harsheel-Kumar-Sahoo" target="_blank" rel="noopener" class="btn btn--ghost">GitHub profile</a>
-      </div>
-      <div class="hero__meta">
-        <span>Gujarat, India</span>
-        <span class="sep">/</span>
-        <span>Class of 2030</span>
-      </div>
-    </div>
-    <div class="hero__photo">
-      <div class="photo-ring">
-        <img src="profile.png" alt="Portrait of Harsheel Kumar Sahoo" id="profileImg" onerror="this.style.display='none'; document.getElementById('photoFallback').style.display='flex';">
-        <div class="photo-fallback" id="photoFallback">HKS</div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ABOUT -->
-  <section class="section" id="about">
-    <div class="section__head">
-      <p class="eyebrow">01 — About</p>
-      <h2>Starting from first principles.</h2>
-    </div>
-    <div class="about__grid">
-      <p class="about__text">
-        I'm an Artificial Intelligence undergraduate at Sardar Vallabhbhai National Institute of Technology (SVNIT),
-        Surat, just getting started on the B.Tech journey. My background is rooted in mathematics and problem solving —
-        I came in through competitive exams and olympiads, and I like carrying that same rigor into how I approach code.
-        Right now I'm focused on strengthening my fundamentals in programming, data structures and the math that
-        underlies machine learning, while building small hands-on projects along the way.
-      </p>
-      <div class="highlights">
-        <div class="highlight">
-          <span class="highlight__label">JEE Advanced</span>
-          <span class="highlight__value">Qualified · AIR 21588</span>
-        </div>
-        <div class="highlight">
-          <span class="highlight__label">JEE Main</span>
-          <span class="highlight__value">99.03 %ile · AIR 15583</span>
-        </div>
-        <div class="highlight">
-          <span class="highlight__label">IOQM 2024</span>
-          <span class="highlight__value">Merit Certificate</span>
-        </div>
-      </div>
-    </div>
-  </section>
+      <div class="card__tags">
 
-  <!-- SKILLS -->
-  <section class="section" id="skills">
-    <div class="section__head">
-      <p class="eyebrow">02 — Skills</p>
-      <h2>What I build with.</h2>
-    </div>
-    <div class="skills">
-      <div class="skill-group">
-        <h3>Languages</h3>
-        <div class="chips">
-          <span class="chip">C++</span>
-          <span class="chip">C</span>
-          <span class="chip">Python</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h3>Web &amp; Data</h3>
-        <div class="chips">
-          <span class="chip">HTML</span>
-          <span class="chip">MySQL</span>
-        </div>
-      </div>
-    </div>
-  </section>
+        <span>Arduino</span>
+        <span>Embedded C</span>
+        <span>Sensors</span>
 
-  <!-- PROJECTS -->
-  <section class="section" id="projects">
-    <div class="section__head">
-      <p class="eyebrow">03 — Projects</p>
-      <h2>Things I've made.</h2>
-    </div>
-    <div class="projects">
+      </div>
 
-      <article class="card">
-        <div class="card__top">
-          <span class="card__tag">Hardware · Arduino</span>
-        </div>
-        <h3>Social Distance Maintainer</h3>
-        <p>
-          A wearable belt built with an Arduino Mega, four ultrasonic sensors and a buzzer that
-          alerts the wearer when someone enters an unsafe distance. Built and demoed as part of
-          an ATL Marathon submission.
-        </p>
-        <div class="card__tags">
-          <span>Arduino</span><span>Embedded C</span><span>Sensors</span>
-        </div>
-        <a class="card__link" href="https://github.com/Harsheel-Kumar-Sahoo" target="_blank" rel="noopener">View on GitHub →</a>
-      </article>
+      <a
+        class="card__link"
+        href="https://github.com/Harsheel-Kumar-Sahoo"
+        target="_blank"
+        rel="noopener"
+      >
+        View on GitHub →
+      </a>
+
+    </article>
+
+  </div>
+
+</section>
+
+<!-- =========================================================
+     CONTACT
+========================================================= -->
+
+<section class="section section--contact" id="contact">
+
+  <div class="section__head">
+
+    <p class="eyebrow">
+      04 — Contact
+    </p>
+
+    <h2>
+      Let's talk.
+    </h2>
+
+  </div>
+
+  <div class="contact">
+
+    <p class="contact__text">
+      Open to connecting with peers, mentors and anyone building interesting
+      things in AI. Reach out through GitHub, or drop an email.
+    </p>
+
+    <div class="contact__links">
+
+      <a
+        href="https://github.com/Harsheel-Kumar-Sahoo"
+        target="_blank"
+        rel="noopener"
+        class="contact__link"
+      >
+        GitHub
+        <span>→</span>
+      </a>
+
+      <a
+        href="mailto:harsheelkumarsahoo@gmail.com"
+        class="contact__link"
+      >
+        Email
+        <span>→</span>
+      </a>
+
+      <a
+        href="https://www.linkedin.com/in/harsheel-kumar-sahoo"
+        target="_blank"
+        rel="noopener"
+        class="contact__link"
+      >
+        LinkedIn
+        <span>→</span>
+      </a>
 
     </div>
-  </section>
 
-  <!-- CONTACT -->
-  <section class="section section--contact" id="contact">
-    <div class="section__head">
-      <p class="eyebrow">04 — Contact</p>
-      <h2>Let's talk.</h2>
-    </div>
-    <div class="contact">
-      <p class="contact__text">
-        Open to connecting with peers, mentors and anyone building interesting things in AI.
-        Reach out through GitHub, or drop an email.
-      </p>
-      <div class="contact__links">
-        <a href="https://github.com/Harsheel-Kumar-Sahoo" target="_blank" rel="noopener" class="contact__link">
-          GitHub<span>→</span>
-        </a>
-        <a href="mailto:harsheelkumarsahoo@gmail.com" class="contact__link">
-          Email<span>→</span>
-        </a>
-        <a href="https://www.linkedin.com/in/harsheel-kumar-sahoo" target="_blank" rel="noopener" class="contact__link">
-          LinkedIn<span>→</span>
-        </a>
-      </div>
-    </div>
-  </section>
+  </div>
+
+</section>
 
 </main>
 
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
 <footer class="footer">
-  <span>© <span id="year"></span> Harsheel Kumar Sahoo</span>
-  <span>Built &amp; maintained on GitHub</span>
+
+  <span>
+    © <span id="year"></span> Harsheel Kumar Sahoo
+  </span>
+
+  <span>
+    Built &amp; maintained on GitHub
+  </span>
+
 </footer>
 
-<script src="script.js"></script>
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+/* =========================================================
+   THEME TOGGLE
+   Default: LIGHT
+========================================================= */
+
+const root = document.documentElement;
+
+const themeToggle =
+  document.getElementById('themeToggle');
+
+const mnavThemeToggle =
+  document.getElementById('mnavThemeToggle');
+
+
+function getTheme() {
+
+  return root.getAttribute('data-theme') === 'dark'
+    ? 'dark'
+    : 'light';
+
+}
+
+
+function setTheme(theme) {
+
+  root.setAttribute('data-theme', theme);
+
+  try {
+    localStorage.setItem('theme', theme);
+  } catch (e) {}
+
+  const isDark = theme === 'dark';
+
+  themeToggle.setAttribute(
+    'aria-pressed',
+    String(!isDark)
+  );
+
+}
+
+
+function toggleTheme() {
+
+  setTheme(
+    getTheme() === 'dark'
+      ? 'light'
+      : 'dark'
+  );
+
+}
+
+
+/* Sync theme with saved preference */
+
+setTheme(getTheme());
+
+
+/* Desktop theme button */
+
+themeToggle.addEventListener(
+  'click',
+  toggleTheme
+);
+
+
+/* Mobile theme button */
+
+mnavThemeToggle.addEventListener(
+  'click',
+  toggleTheme
+);
+
+
+/* =========================================================
+   FOOTER YEAR
+========================================================= */
+
+document.getElementById('year').textContent =
+  new Date().getFullYear();
+
+
+/* =========================================================
+   MOBILE NAVIGATION
+========================================================= */
+
+const burger =
+  document.getElementById('burger');
+
+const mnav =
+  document.getElementById('mnav');
+
+
+burger.addEventListener('click', () => {
+
+  const open =
+    mnav.classList.toggle('open');
+
+  burger.setAttribute(
+    'aria-expanded',
+    open
+  );
+
+});
+
+
+/* Close mobile menu after clicking a link */
+
+mnav.querySelectorAll('a').forEach(a => {
+
+  a.addEventListener('click', () => {
+
+    mnav.classList.remove('open');
+
+    burger.setAttribute(
+      'aria-expanded',
+      'false'
+    );
+
+  });
+
+});
+
+
+/* =========================================================
+   HERO NETWORK ANIMATION
+========================================================= */
+
+const canvas =
+  document.getElementById('net');
+
+const ctx =
+  canvas.getContext('2d');
+
+const reduceMotion =
+  window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
+
+
+let nodes = [];
+
+let w;
+let h;
+let dpr;
+
+
+function resize() {
+
+  const hero =
+    canvas.parentElement;
+
+  w = hero.clientWidth;
+
+  h = hero.clientHeight;
+
+  dpr = Math.min(
+    window.devicePixelRatio || 1,
+    2
+  );
+
+  canvas.width = w * dpr;
+
+  canvas.height = h * dpr;
+
+  canvas.style.width =
+    w + 'px';
+
+  canvas.style.height =
+    h + 'px';
+
+  ctx.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+  );
+
+  seedNodes();
+
+}
+
+
+function seedNodes() {
+
+  const count =
+    Math.max(
+      14,
+      Math.round(
+        (w * h) / 42000
+      )
+    );
+
+  nodes =
+    Array.from(
+      { length: count },
+      () => ({
+
+        x: Math.random() * w,
+
+        y: Math.random() * h,
+
+        vx:
+          (Math.random() - 0.5)
+          * 0.18,
+
+        vy:
+          (Math.random() - 0.5)
+          * 0.18,
+
+        r:
+          Math.random() * 1.4 + 1
+
+      })
+    );
+
+}
+
+
+const LINK_DIST = 150;
+
+const ACCENT =
+  '52, 84, 209';
+
+const INK =
+  '20, 23, 31';
+
+
+function step() {
+
+  ctx.clearRect(
+    0,
+    0,
+    w,
+    h
+  );
+
+
+  /* Move nodes */
+
+  for (const n of nodes) {
+
+    n.x += n.vx;
+
+    n.y += n.vy;
+
+
+    if (
+      n.x < 0 ||
+      n.x > w
+    ) {
+      n.vx *= -1;
+    }
+
+
+    if (
+      n.y < 0 ||
+      n.y > h
+    ) {
+      n.vy *= -1;
+    }
+
+  }
+
+
+  /* Draw connecting lines */
+
+  for (
+    let i = 0;
+    i < nodes.length;
+    i++
+  ) {
+
+    for (
+      let j = i + 1;
+      j < nodes.length;
+      j++
+    ) {
+
+      const a = nodes[i];
+
+      const b = nodes[j];
+
+      const dx =
+        a.x - b.x;
+
+      const dy =
+        a.y - b.y;
+
+      const dist =
+        Math.sqrt(
+          dx * dx +
+          dy * dy
+        );
+
+
+      if (dist < LINK_DIST) {
+
+        const alpha =
+          (1 - dist / LINK_DIST)
+          * 0.35;
+
+        ctx.strokeStyle =
+          `rgba(${INK}, ${alpha})`;
+
+        ctx.lineWidth = 1;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+          a.x,
+          a.y
+        );
+
+        ctx.lineTo(
+          b.x,
+          b.y
+        );
+
+        ctx.stroke();
+
+      }
+
+    }
+
+  }
+
+
+  /* Draw nodes */
+
+  for (const n of nodes) {
+
+    ctx.fillStyle =
+      `rgba(${ACCENT}, 0.75)`;
+
+    ctx.beginPath();
+
+    ctx.arc(
+      n.x,
+      n.y,
+      n.r,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fill();
+
+  }
+
+
+  if (!reduceMotion) {
+
+    requestAnimationFrame(step);
+
+  }
+
+}
+
+
+/* =========================================================
+   INITIALIZE NETWORK
+========================================================= */
+
+window.addEventListener(
+  'resize',
+  resize
+);
+
+resize();
+
+step();
+
+</script>
+
 </body>
 </html>
